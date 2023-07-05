@@ -7,9 +7,14 @@ import {
   FaTwitter,
   FaFeatherAlt,
 } from "react-icons/fa";
+import { useSession } from "next-auth/react";
 import newTweet from "@/app/callers/tweet/new";
+import SignIn from "../Sign/SignIn";
+import SignOut from "../Sign/SignOut";
 
 const Sidebar = () => {
+  const { data: session } = useSession();
+  console.log(session);
   return (
     <aside className="shrink-0 px-1 py-2">
       <SidebarItem.Root className={"lg:py-4"}>
@@ -41,6 +46,8 @@ const Sidebar = () => {
           <SidebarItem.Label label="profile" />
         </SidebarItem.Link>
       </SidebarItem.Root>
+
+      {session?.user ? <SignOut /> : <SignIn />}
 
       <SidebarItem.Root className="w-full">
         <SidebarItem.Button
