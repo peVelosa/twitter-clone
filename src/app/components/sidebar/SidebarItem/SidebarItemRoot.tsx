@@ -2,26 +2,21 @@ import Link, { LinkProps } from "next/link";
 import { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
-interface SidebarItemRootProps extends LinkProps {
+type SidebarItemRootProps = {
   children: ReactNode;
-  className?: React.ComponentProps<"a">["className"];
-}
+  className?: React.ComponentProps<"div">["className"];
+};
 
-const SidebarItemRoot = ({
-  children,
-  href,
-  className,
-}: SidebarItemRootProps) => {
+const SidebarItemRoot = ({ children, className }: SidebarItemRootProps) => {
   return (
-    <Link
-      href={href}
+    <div
       className={twMerge(
-        "flex items-center justify-center mb-4 p-2 w-fit rounded-full hover:bg-gray-600 lg:px-4 gap-2",
+        "mb-4 w-fit rounded-full hover:bg-gray-600 overflow-hidden",
         className
       )}
     >
       {children}
-    </Link>
+    </div>
   );
 };
 

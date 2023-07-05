@@ -1,5 +1,6 @@
 import { HTMLAttributes } from "react";
 import { IconType } from "react-icons";
+
 interface SidebarItemIconProps extends HTMLAttributes<HTMLDivElement> {
   icon: IconType;
 }
