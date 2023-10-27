@@ -9,3 +9,90 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+
+  userName   String @unique
+  followedBy User[] @relation("UserFollows")
+  following  User[] @relation("UserFollows")
+
+  tweets      Tweet[] @relation(name: "owner_tweet")
+  tweetsLiked Tweet[] @relation(name: "user_tweets_like")
+
+  comments      Comment[] @relation(name: "owner_comment")
+  commentsLiked Comment[] @relation(name: "user_comments_like")
+}
+
+model Tweet {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  body    String
+  owner   User   @relation(name: "owner_tweet", fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId String
+
+  comments Comment[]
+
+  likes User[] @relation(name: "user_tweets_like")
+
+  @@index([id, ownerId])
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  body    String
+  owner   User   @relation(name: "owner_comment", fields: [ownerId], references: [id], onDelete: Cascade)
+  ownerId String
+
+  tweet   Tweet  @relation(fields: [tweetId], references: [id], onDelete: Cascade)
+  tweetId String
+
+  likes User[] @relation(name: "user_comments_like")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
