@@ -20,10 +20,12 @@ export default function RootLayout({
     <Providers>
       <html lang="en">
         <body
-          className={`${inter.className} min-h-screen w-screen bg-default text-default `}
+          className={`${inter.className} min-h-screen w-screen bg-default text-default`}
         >
-          <Sidebar />
-          {children}
+          <div className="mx-auto flex max-w-3xl flex-row gap-4">
+            <Sidebar />
+            {children}
+          </div>
         </body>
       </html>
     </Providers>
