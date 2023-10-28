@@ -22,7 +22,7 @@ export default function RootLayout({
         <body
           className={`${inter.className} min-h-screen w-screen bg-default text-default`}
         >
-          <div className="mx-auto flex max-w-3xl flex-row gap-4">
+          <div className="mx-auto flex max-w-3xl flex-row">
             <Sidebar />
             {children}
           </div>
