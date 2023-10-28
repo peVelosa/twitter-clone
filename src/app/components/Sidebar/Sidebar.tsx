@@ -7,7 +7,7 @@ import SidebarTweet from "./SidebarTweet";
 const Sidebar = async () => {
   const session = await useServerSession();
   return (
-    <aside className="grid w-fit gap-4 border-r border-default pr-4">
+    <aside className="grid w-fit gap-4 border-r border-default py-2 pr-4">
       {links.map(({ label, icon, href, className, isPrivate }) =>
         (isPrivate && session) || !isPrivate ? (
           <SidebarLink
