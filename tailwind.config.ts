@@ -22,7 +22,9 @@ const config: Config = {
         default: "rgb(250,250,250)",
         blue: "rgb(56, 189, 248)",
       },
-      borderColor: {},
+      borderColor: {
+        default: "rgb(250,250,250)",
+      },
     },
   },
   plugins: [],
