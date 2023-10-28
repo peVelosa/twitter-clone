@@ -1,15 +1,13 @@
-"use client";
-import { signIn, signOut } from "next-auth/react";
-
-// import { UserButton } from "@clerk/nextjs";
+import PageTitle from "../components/PageTitle";
 
 const Home = () => {
   return (
-    <div>
-      <button onClick={() => signIn()}>login</button>
-      <button onClick={() => signOut()}>signout</button>
-      <p>This is home page</p>
-    </div>
+    <main className="w-full">
+      <PageTitle title={"home"} />
+      <section className="border-r border-default">
+        <p>This is home page</p>
+      </section>
+    </main>
   );
 };
 
