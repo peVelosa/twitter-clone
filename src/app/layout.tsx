@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Providers from "./Providers";
 import Sidebar from "./components/Sidebar/Sidebar";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({
           <div className="mx-auto flex max-w-3xl flex-row">
             <Sidebar />
             {children}
+            <ReactQueryDevtools initialIsOpen={false} />
           </div>
         </body>
       </html>
