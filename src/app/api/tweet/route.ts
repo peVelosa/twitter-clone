@@ -45,8 +45,11 @@ export async function POST(request: Request) {
     body: string;
   };
 
-  if (!userId) return new Error("Missing user");
-  if (!body) return new Error("Invalid tweet input");
+  if (!userId)
+    return NextResponse.json({ error: "No user id found" }, { status: 500 });
+
+  if (!body)
+    return NextResponse.json({ error: "No body found" }, { status: 500 });
 
   await db.tweet.create({
     data: {
