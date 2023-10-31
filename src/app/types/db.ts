@@ -16,4 +16,5 @@ export type TTweet = {
   body: string;
   owner: TUser;
   likes: { id: string }[];
+  _count: { comments: number; likes: number };
 };
