@@ -1,5 +1,8 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+  baseURL:
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3000/api/"
+      : "https://pevelosa-twitter-test.vercel.app/api",
 });
