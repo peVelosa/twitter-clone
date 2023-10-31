@@ -22,6 +22,9 @@ export async function GET(request: Request) {
         },
         _count: true,
       },
+      orderBy: {
+        updatedAt: "desc",
+      },
     });
 
     const res = {
