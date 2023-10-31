@@ -1,6 +1,10 @@
 import type { FC } from "react";
 
-const ProfilePage = ({ params: { userName } }) => {
+type ProfilePageProps = {
+  params: { userName: string };
+};
+
+const ProfilePage: FC<ProfilePageProps> = ({ params: { userName } }) => {
   return <div>{userName}</div>;
 };
 
