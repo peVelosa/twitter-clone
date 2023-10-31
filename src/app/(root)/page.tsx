@@ -1,19 +1,14 @@
 import PageTitle from "@/components/PageTitle";
-import { getTweet } from "@/utils/tweets";
-import Tweet from "@/components/Tweet/Tweet";
+import { getTweets } from "@/utils/tweets";
+import ClientHomePage from "./ClientHomePage";
 
 const Home = async () => {
-  const { data: tweets } = await getTweet();
+  const data = await getTweets({});
   return (
     <main className="w-full">
       <PageTitle title={"home"} />
       <section>
-        {tweets?.map((tweet) => (
-          <Tweet
-            {...tweet}
-            key={tweet.id}
-          />
-        ))}
+        <ClientHomePage initialTweetData={data} />
       </section>
     </main>
   );

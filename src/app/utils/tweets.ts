@@ -1,8 +1,18 @@
 import axios from "@/libs/axios";
-import { TInfiniteResponse, TTweet } from "../types/db";
+import { TInfiniteResponse, TTweet } from "@/types/db";
 
-export const getTweet = async () => {
-  return (await axios.get<TInfiniteResponse<TTweet[]>>("/tweet")).data;
+type RQProps = {
+  pageParam?: string;
+  signal?: AbortSignal;
+};
+
+export const getTweets = async ({ pageParam = "0", signal }: RQProps) => {
+  const res = await axios.get<TInfiniteResponse<TTweet[]>>(
+    `/tweet?cursor=${pageParam}`,
+    { signal },
+  );
+
+  return res.data;
 };
 
 type postTweetProps = {

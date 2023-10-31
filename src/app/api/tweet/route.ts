@@ -1,38 +1,76 @@
 import { NextResponse } from "next/server";
 import { db } from "@/app/libs/db";
 
+const MAX_TWEETS_PER_REQUEST = 5;
+
 export async function GET(request: Request) {
   try {
-    const data = await db.tweet.findMany({
-      select: {
-        id: true,
-        body: true,
-        owner: {
-          select: {
-            id: true,
-            name: true,
-            image: true,
-            userName: true,
+    const { searchParams } = new URL(request.url);
+    const cursor = searchParams.get("cursor");
+
+    let data;
+
+    if (!cursor || cursor === "0") {
+      data = await db.tweet.findMany({
+        select: {
+          id: true,
+          body: true,
+          owner: {
+            select: {
+              id: true,
+              name: true,
+              image: true,
+              userName: true,
+            },
           },
-        },
-        likes: {
-          select: {
-            id: true,
+          likes: {
+            select: {
+              id: true,
+            },
           },
+          _count: true,
         },
-        _count: true,
-      },
-      orderBy: {
-        updatedAt: "desc",
-      },
-    });
+        orderBy: {
+          updatedAt: "desc",
+        },
+        take: MAX_TWEETS_PER_REQUEST,
+      });
+    } else {
+      data = await db.tweet.findMany({
+        select: {
+          id: true,
+          body: true,
+          owner: {
+            select: {
+              id: true,
+              name: true,
+              image: true,
+              userName: true,
+            },
+          },
+          likes: {
+            select: {
+              id: true,
+            },
+          },
+          _count: true,
+        },
+        orderBy: {
+          updatedAt: "desc",
+        },
+        take: MAX_TWEETS_PER_REQUEST,
+        cursor: {
+          id: cursor,
+        },
+        skip: 1,
+      });
+    }
 
     const res = {
       data,
       _count: data.length,
       cursor: data[data.length - 1].id,
     };
-
     return NextResponse.json(res, { status: 201 });
   } catch (e) {
     console.error(e);

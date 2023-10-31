@@ -21,7 +21,6 @@ const Tweet: FC<TweetProps> = ({
 
   const tweetHref = `/tweet/${tweetId}`;
   const userHref = `/${userName}`;
-  console.log(_likes);
   return (
     <>
       <div
@@ -34,7 +33,7 @@ const Tweet: FC<TweetProps> = ({
           <Link
             href={userHref}
             className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full"
-            style={{ backgroundColor: generateRColor() }}
+            style={{ backgroundColor: "green" }}
           >
             {image ? (
               <>
