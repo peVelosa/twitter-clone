@@ -1,5 +1,5 @@
-import axios from "@/libs/axios";
 import { TInfiniteResponse, TTweet } from "@/types/db";
+import axios from "axios";
 
 type RQProps = {
   pageParam?: string;
@@ -8,7 +8,7 @@ type RQProps = {
 
 export const getTweets = async ({ pageParam = "0", signal }: RQProps) => {
   const res = await axios.get<TInfiniteResponse<TTweet[]>>(
-    `/tweet?cursor=${pageParam}`,
+    `https://pevelosa-twitter-test.vercel.app/tweet?cursor=${pageParam}`,
     { signal },
   );
 
@@ -21,5 +21,10 @@ type postTweetProps = {
 };
 
 export const postTweet = async ({ body, userId }: postTweetProps) => {
-  return (await axios.post("/tweet", { body, userId })).data;
+  return (
+    await axios.post("https://pevelosa-twitter-test.vercel.app/tweet", {
+      body,
+      userId,
+    })
+  ).data;
 };
