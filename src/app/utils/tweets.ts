@@ -5,6 +5,11 @@ export const getTweet = async () => {
   return (await axios.get<TInfiniteResponse<TTweet[]>>("/tweet")).data;
 };
 
-export const postTweet = async ({ body, userId }) => {
+type postTweetProps = {
+  body: string;
+  userId: string;
+};
+
+export const postTweet = async ({ body, userId }: postTweetProps) => {
   return (await axios.post("/tweet", { body, userId })).data;
 };
