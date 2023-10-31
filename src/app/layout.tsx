@@ -21,7 +21,7 @@ export default function RootLayout({
     <Providers>
       <html lang="en">
         <body
-          className={`${inter.className} min-h-screen w-screen bg-default text-default`}
+          className={`${inter.className} min-h-screen w-screen overflow-x-hidden bg-default pb-8 text-default`}
         >
           <div className="mx-auto flex max-w-3xl flex-row">
             <Sidebar />
