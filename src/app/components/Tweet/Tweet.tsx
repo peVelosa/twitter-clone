@@ -20,7 +20,7 @@ const Tweet: FC<TweetProps> = ({
 
   return (
     <div
-      className="grid cursor-pointer grid-cols-[auto_4fr] grid-rows-[auto_1fr] gap-4 border-b border-default p-2 hover:bg-slate-800"
+      className="grid h-96 cursor-pointer grid-cols-[auto_4fr] grid-rows-[auto_1fr] gap-4 border-b border-default p-2 hover:bg-slate-800"
       onClick={() => {
         router.push(tweetHref);
       }}
