@@ -1,6 +1,7 @@
 "use client";
 
 import { TTweet } from "@/types/db";
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { FC } from "react";
@@ -20,13 +21,28 @@ const Tweet: FC<TweetProps> = ({
 
   return (
     <div
-      className="grid h-96 cursor-pointer grid-cols-[auto_4fr] grid-rows-[auto_1fr] gap-4 border-b border-default p-2 hover:bg-slate-800"
+      className="grid cursor-pointer grid-cols-[auto_4fr] grid-rows-[auto_1fr] gap-4 border-b border-default p-2 hover:bg-slate-800"
       onClick={() => {
         router.push(tweetHref);
       }}
     >
       <div onClick={(e) => e.stopPropagation()}>
-        <Link href={userHref}>image</Link>
+        <Link
+          href={userHref}
+          className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-red-200"
+        >
+          {image ? (
+            <>
+              <Image
+                alt="user image profile"
+                src={image}
+                layout="fill"
+              />
+            </>
+          ) : (
+            <span>{userName[0].toLocaleUpperCase()}</span>
+          )}
+        </Link>
       </div>
       <div onClick={(e) => e.stopPropagation()}>
         <Link
