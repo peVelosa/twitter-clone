@@ -16,20 +16,25 @@ const Tweet: FC<TweetProps> = ({
   const router = useRouter();
 
   const tweetHref = `/tweet/${tweetId}`;
+  const userHref = `/${userName}`;
 
   return (
     <div
-      className="grid grid-cols-[auto_4fr] grid-rows-[auto_1fr] gap-4 border-b border-default p-2 hover:bg-slate-800"
+      className="grid cursor-pointer grid-cols-[auto_4fr] grid-rows-[auto_1fr] gap-4 border-b border-default p-2 hover:bg-slate-800"
       onClick={() => {
         router.push(tweetHref);
       }}
     >
       <div onClick={(e) => e.stopPropagation()}>
-        <Link href={`/${userName}`}>image</Link>
+        <Link href={userHref}>image</Link>
       </div>
       <div onClick={(e) => e.stopPropagation()}>
-        <Link href={`/${userName}`}>
-          {name}@{userName}
+        <Link
+          href={userHref}
+          className="flex items-center gap-2"
+        >
+          <span className="font-bold hover:underline">{name}</span>
+          <span className="text-slate-200">@{userName}</span>
         </Link>
       </div>
       <div className="col-start-2 row-start-2">
