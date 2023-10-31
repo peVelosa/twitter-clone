@@ -7,7 +7,7 @@ const Home = async () => {
   return (
     <main className="w-full">
       <PageTitle title={"home"} />
-      <section className="border-r border-default">
+      <section>
         {tweets?.map((tweet) => (
           <Tweet
             {...tweet}
