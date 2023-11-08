@@ -33,7 +33,7 @@ const ClientHomePage: FC<ClientHomePageProps> = ({ initialTweetData }) => {
   }, [fetchNextPage, inView]);
 
   return (
-    <div>
+    <>
       {tweets?.pages?.map(
         (page) =>
           page.data?.map((tweet) => (
@@ -47,7 +47,7 @@ const ClientHomePage: FC<ClientHomePageProps> = ({ initialTweetData }) => {
         ref={ref}
         className="pointer-events-none opacity-0"
       ></div>
-    </div>
+    </>
   );
 };
 

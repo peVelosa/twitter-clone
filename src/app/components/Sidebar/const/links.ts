@@ -22,7 +22,7 @@ export const links = [
   {
     icon: User,
     label: "profile",
-    href: "/profile",
+    href: "/",
     isPrivate: true,
   },
 ];

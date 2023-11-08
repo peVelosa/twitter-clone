@@ -23,9 +23,9 @@ export default function RootLayout({
         <body
           className={`${inter.className} min-h-screen w-screen overflow-x-hidden bg-default pb-8 text-default`}
         >
-          <div className="mx-auto flex max-w-3xl flex-row">
+          <div className="mx-auto flex max-w-4xl flex-row pl-4 pr-8">
             <Sidebar />
-            <div className="w-full border-x border-default">{children}</div>
+            <div className="w-full">{children}</div>
             <ReactQueryDevtools initialIsOpen={false} />
           </div>
         </body>

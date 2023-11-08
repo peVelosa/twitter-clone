@@ -15,7 +15,7 @@ const Sidebar = async () => {
             key={href}
             label={label}
             icon={icon}
-            href={href}
+            href={label === "profile" ? `/${session?.user.userName}` : href}
             className={className}
           />
         ) : null,
@@ -28,7 +28,6 @@ const Sidebar = async () => {
       ) : (
         <SignIn />
       )}
-      session:{JSON.stringify(session)}
     </aside>
   );
 };
