@@ -18,3 +18,11 @@ export type TTweet = {
   likes: { id: string }[];
   _count: { comments: number; likes: number };
 };
+
+export type TUserProfile = {
+  info: TUser & {
+    followedBy: TUser[];
+    following: TUser[];
+  };
+  tweets: TTweet[];
+};
