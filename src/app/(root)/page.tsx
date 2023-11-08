@@ -7,9 +7,7 @@ const Home = async () => {
   return (
     <main className="w-full">
       <PageTitle title={"home"} />
-      <section>
-        <ClientHomePage initialTweetData={data} />
-      </section>
+      <section>{/* <ClientHomePage initialTweetData={data} /> */}</section>
     </main>
   );
 };

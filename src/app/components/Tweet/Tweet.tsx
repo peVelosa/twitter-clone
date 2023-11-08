@@ -40,7 +40,9 @@ const Tweet: FC<TweetProps> = ({
                 <Image
                   alt="user image profile"
                   src={image}
-                  layout="fill"
+                  width={20}
+                  height={20}
+                  className="h-full w-full"
                 />
               </>
             ) : (

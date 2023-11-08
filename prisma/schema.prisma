@@ -20,6 +20,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   accounts      Account[]
   sessions      Session[]
+  password      String    @default("")
 
   userName   String @unique
   followedBy User[] @relation("UserFollows")
