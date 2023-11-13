@@ -10,7 +10,9 @@ const SignIn = () => {
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const username_email = e.target["username-email"].value as string;
+    //@ts-ignore:next-line
+    const username_email = e.target["username-email"].value;
+    //@ts-ignore:next-line
     const password = e.target.password.value;
     await signIn("credentials", {
       username: username_email,
