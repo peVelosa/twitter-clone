@@ -22,35 +22,12 @@ export async function GET(req: Request, { params: { userName } }: GETProps) {
         image: true,
         followedBy: true,
         following: true,
-        tweets: {
-          select: {
-            id: true,
-            body: true,
-            owner: {
-              select: {
-                id: true,
-                name: true,
-                image: true,
-                userName: true,
-              },
-            },
-            likes: {
-              select: {
-                id: true,
-              },
-            },
-            _count: true,
-          },
-        },
+        createdAt: true,
+        tweets: false,
       },
     });
 
-    const data = {
-      info: { ...user, tweets: undefined },
-      tweets: user?.tweets,
-    };
-
-    return NextResponse.json(data);
+    return NextResponse.json(user);
   } catch (e) {
     //handle erro
     return NextResponse.json({});

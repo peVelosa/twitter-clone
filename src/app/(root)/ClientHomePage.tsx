@@ -2,18 +2,16 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { getTweets } from "@/utils/tweets";
 import Tweet from "@/components/Tweet/Tweet";
-import { useInView } from "react-intersection-observer";
+import InfiniteRender from "../components/InfiniteRender";
 
-import { TInfiniteResponse, TTweet } from "@/types/db";
-import { useEffect, type FC } from "react";
+import type { TInfiniteResponse, TTweet } from "@/types/db";
+import { type FC } from "react";
 
 type ClientHomePageProps = {
   initialTweetData: TInfiniteResponse<TTweet[]>;
 };
 
 const ClientHomePage: FC<ClientHomePageProps> = ({ initialTweetData }) => {
-  const { ref, inView } = useInView();
-
   const { data: tweets, fetchNextPage } = useInfiniteQuery({
     queryKey: ["tweets"],
     queryFn: async ({ signal, pageParam }) =>
@@ -23,30 +21,22 @@ const ClientHomePage: FC<ClientHomePageProps> = ({ initialTweetData }) => {
       pageParams: ["0"],
       pages: [initialTweetData],
     },
-    getNextPageParam: (lastPage, pages) => lastPage.cursor ?? undefined,
+    getNextPageParam: (lastPage, pages) => lastPage?.cursor ?? undefined,
   });
-
-  useEffect(() => {
-    if (inView) {
-      fetchNextPage();
-    }
-  }, [fetchNextPage, inView]);
 
   return (
     <>
-      {tweets?.pages?.map(
-        (page) =>
-          page.data?.map((tweet) => (
-            <Tweet
-              {...tweet}
-              key={tweet.id}
-            />
-          )),
-      )}
-      <div
-        ref={ref}
-        className="pointer-events-none opacity-0"
-      ></div>
+      <InfiniteRender fetchNextPage={fetchNextPage}>
+        {tweets?.pages?.map(
+          (page) =>
+            page.data?.map((tweet) => (
+              <Tweet
+                {...tweet}
+                key={tweet.id}
+              />
+            )),
+        )}
+      </InfiniteRender>
     </>
   );
 };

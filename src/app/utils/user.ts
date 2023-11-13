@@ -6,10 +6,10 @@ type getUserByUserNameProps = {
   signal?: AbortSignal;
 };
 
-export const getUserByUserName = async ({
+export const getUserData = async ({
   userName,
   signal,
-}: getUserByUserNameProps) => {
+}: getUserByUserNameProps): Promise<TUserProfile> => {
   const res = await axios.get<TUserProfile>(`/user/${userName}`, { signal });
 
   return res.data;

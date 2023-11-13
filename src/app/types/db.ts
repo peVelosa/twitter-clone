@@ -7,7 +7,7 @@ export type TInfiniteResponse<T> = {
 export type TUser = {
   id: string;
   name: string;
-  image: string;
+  image?: string;
   userName: string;
 };
 
@@ -19,10 +19,9 @@ export type TTweet = {
   _count: { comments: number; likes: number };
 };
 
-export type TUserProfile = {
-  info: TUser & {
-    followedBy: TUser[];
-    following: TUser[];
-  };
-  tweets: TTweet[];
+export type TUserProfile = TUser & {
+  background?: string;
+  createdAt: string;
+  followedBy: TUser[];
+  following: TUser[];
 };

@@ -4,13 +4,14 @@ import ClientHomePage from "./ClientHomePage";
 
 const Home = async () => {
   const data = await getTweets({});
+
   return (
-    <main className="flex-grow">
+    <div className="flex-grow">
       <PageTitle title={"home"} />
       <section>
         <ClientHomePage initialTweetData={data} />
       </section>
-    </main>
+    </div>
   );
 };
 

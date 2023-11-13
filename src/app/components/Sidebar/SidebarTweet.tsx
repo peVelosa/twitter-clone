@@ -10,10 +10,7 @@ type SidebarTweetProps = {
 
 const SidebarTweet: FC<SidebarTweetProps> = ({ userId }) => {
   return (
-    <button
-      className="bg-blue hover:bg-opacity-default flex w-full items-center justify-center rounded-full py-2 capitalize"
-      // onClick={() => postTweet({ body: "teste", userId })}
-    >
+    <button className="flex w-full items-center justify-center rounded-full bg-blue py-2 capitalize hover:bg-opacity-default">
       <Feather className="md:hidden" />
       <span className="hidden md:block">Tweet</span>
     </button>

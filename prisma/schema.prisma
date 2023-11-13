@@ -20,11 +20,12 @@ model User {
   updatedAt     DateTime  @updatedAt
   accounts      Account[]
   sessions      Session[]
-  password      String    @default("")
 
-  userName   String @unique
-  followedBy User[] @relation("UserFollows")
-  following  User[] @relation("UserFollows")
+  background String?
+  password   String  @default("")
+  userName   String  @unique
+  followedBy User[]  @relation("UserFollows")
+  following  User[]  @relation("UserFollows")
 
   tweets      Tweet[] @relation(name: "owner_tweet")
   tweetsLiked Tweet[] @relation(name: "user_tweets_like")

@@ -25,7 +25,7 @@ export default function RootLayout({
         >
           <div className="mx-auto flex max-w-4xl flex-row pl-4 pr-8">
             <Sidebar />
-            <div className="w-full">{children}</div>
+            <main className="w-full">{children}</main>
             <ReactQueryDevtools initialIsOpen={false} />
           </div>
         </body>
