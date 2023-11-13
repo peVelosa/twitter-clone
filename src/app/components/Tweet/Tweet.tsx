@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { type FC } from "react";
 import { HeartIcon, MessageCircleIcon } from "lucide-react";
 import { generateRColor } from "@/utils/functions";
+import ImageWithFallback from "../ImageWithFallback";
 
 type TweetProps = TTweet;
 
@@ -36,19 +37,13 @@ const Tweet: FC<TweetProps> = ({
               className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full"
               style={{ backgroundColor: "green" }}
             >
-              {image ? (
-                <>
-                  <Image
-                    alt="user image profile"
-                    src={image}
-                    width={20}
-                    height={20}
-                    className="h-full w-full"
-                  />
-                </>
-              ) : (
-                <span>{userName[0].toLocaleUpperCase()}</span>
-              )}
+              <ImageWithFallback
+                alt="user image profile"
+                src={image}
+                width={20}
+                height={20}
+                className="h-full w-full"
+              />
             </Link>
           </div>
           <div onClick={(e) => e.stopPropagation()}>

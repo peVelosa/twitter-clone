@@ -22,6 +22,6 @@ export type TTweet = {
 export type TUserProfile = TUser & {
   background?: string;
   createdAt: string;
-  followedBy: TUser[];
-  following: TUser[];
+  followedBy: { id: string }[];
+  following: { id: string }[];
 };

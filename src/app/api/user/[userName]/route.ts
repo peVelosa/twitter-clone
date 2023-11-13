@@ -20,8 +20,16 @@ export async function GET(req: Request, { params: { userName } }: GETProps) {
         name: true,
         userName: true,
         image: true,
-        followedBy: true,
-        following: true,
+        followedBy: {
+          select: {
+            id: true,
+          },
+        },
+        following: {
+          select: {
+            id: true,
+          },
+        },
         createdAt: true,
         tweets: false,
       },

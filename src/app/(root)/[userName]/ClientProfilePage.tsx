@@ -27,17 +27,16 @@ const ClientProfilePage = ({
     },
     getNextPageParam: (lastPage, pages) => lastPage?.cursor ?? undefined,
   });
-
   return (
     <>
       <div className="col-start-1 row-span-full row-start-3 h-full bg-white pb-4 pt-14">
         <div>
-          <div className="text-black">
-            <div className="mb-4 pl-4">
-              <h2 className="text-xl font-bold">{user.name}</h2>
-              <h3 className="text-slate-600">@{user.userName}</h3>
+          <div className="pl-4 text-slate-600">
+            <div>
+              <h2 className="text-xl font-bold text-black">{user.name}</h2>
+              <h3 className="mb-4 text-slate-600">@{user.userName}</h3>
             </div>
-            <h4 className="flex items-center gap-2 pl-4 text-slate-600">
+            <h4 className="mb-4 flex items-center gap-2">
               <Calendar className="stroke-slate-500" />
               Joined{" "}
               {new Intl.DateTimeFormat("en-US", {
@@ -45,6 +44,10 @@ const ClientProfilePage = ({
                 year: "numeric",
               }).format(new Date(user.createdAt))}
             </h4>
+            <div className="flex items-center gap-4">
+              <h4>Following {user.following.length}</h4>
+              <h4>Followers {user.followedBy.length}</h4>
+            </div>
           </div>
         </div>
       </div>
