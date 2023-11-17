@@ -30,6 +30,7 @@ export async function GET(req: Request, { params: { userName } }: GETProps) {
             id: true,
           },
         },
+        background: true,
         createdAt: true,
         tweets: false,
       },

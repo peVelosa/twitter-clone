@@ -9,6 +9,7 @@ export type TUser = {
   name: string;
   image?: string;
   userName: string;
+  email: string;
 };
 
 export type TTweet = {
