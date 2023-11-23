@@ -4,5 +4,8 @@
     "prettier-plugin-tailwindcss"
   ],
   "printWidth": 120,
-  "arrowParens": "always"
+  "arrowParens": "always",
+  "embeddedLanguageFormatting": "auto",
+  "singleQuote": true,
+  "jsxSingleQuote": true
 }

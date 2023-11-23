@@ -1,16 +1,33 @@
-import axios from "@/libs/axios";
-import { TUserProfile } from "@/types/db";
+import axios from '@/libs/axios';
+import { TUserProfile } from '@/types/db';
+import { TForm } from '../components/Profile/EditProfile';
 
-type getUserByUserNameProps = {
-  userName: string;
+type AxiosSignal = {
   signal?: AbortSignal;
 };
 
-export const getUserData = async ({
-  userName,
-  signal,
-}: getUserByUserNameProps): Promise<TUserProfile> => {
+type getUserByUserNameProps = {
+  userName: string;
+} & AxiosSignal;
+
+export const getUserData = async ({ userName, signal }: getUserByUserNameProps): Promise<TUserProfile> => {
   const res = await axios.get<TUserProfile>(`/user/${userName}`, { signal });
 
   return res.data;
+};
+
+type updateUser = TForm & { originalUserName: string } & AxiosSignal;
+export const updateUser = async ({
+  originalUserName,
+  userName,
+  background,
+  email,
+  image,
+  name,
+  signal,
+}: updateUser): Promise<void> => {
+  await axios.put<TForm>(`/user/${originalUserName}`, {
+    data: { userName, background, email, image, name },
+    signal,
+  });
 };

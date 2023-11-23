@@ -1,25 +1,22 @@
-import { NextResponse } from "next/server";
-import { db } from "@/app/libs/db";
+import { NextResponse } from 'next/server';
+import { db } from '@/app/libs/db';
 
 const MAX_TWEETS_PER_REQUEST = 5;
 
-type GETProps = {
+type RouteProps = {
   params: {
     userName: string;
   };
 };
 
-export async function GET(
-  request: Request,
-  { params: { userName } }: GETProps,
-) {
+export async function GET(request: Request, { params: { userName } }: RouteProps) {
   try {
     const { searchParams } = new URL(request.url);
-    const cursor = searchParams.get("cursor");
+    const cursor = searchParams.get('cursor');
 
     let data;
 
-    if (!cursor || cursor === "0") {
+    if (!cursor || cursor === '0') {
       data = await db.tweet.findMany({
         where: {
           owner: {
@@ -42,10 +39,11 @@ export async function GET(
               id: true,
             },
           },
+          updatedAt: true,
           _count: true,
         },
         orderBy: {
-          updatedAt: "desc",
+          updatedAt: 'desc',
         },
         take: MAX_TWEETS_PER_REQUEST,
       });
@@ -72,14 +70,15 @@ export async function GET(
               id: true,
             },
           },
+          updatedAt: true,
           _count: true,
         },
         orderBy: {
-          updatedAt: "desc",
+          updatedAt: 'desc',
         },
         take: MAX_TWEETS_PER_REQUEST,
         cursor: {
-          id: cursor,
+          updatedAt: cursor,
         },
         skip: 1,
       });
@@ -87,8 +86,8 @@ export async function GET(
 
     const res = {
       data,
-      _count: data.length,
-      cursor: data[data.length - 1].id,
+      _count: data?.length,
+      cursor: data[data.length - 1]?.updatedAt,
     };
     return NextResponse.json(res, { status: 201 });
   } catch (e) {

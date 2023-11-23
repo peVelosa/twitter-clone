@@ -28,6 +28,7 @@ export async function GET(request: Request) {
               id: true,
             },
           },
+          updatedAt: true,
           _count: true,
         },
         orderBy: {
@@ -53,6 +54,7 @@ export async function GET(request: Request) {
               id: true,
             },
           },
+          updatedAt: true,
           _count: true,
         },
         orderBy: {
@@ -60,16 +62,15 @@ export async function GET(request: Request) {
         },
         take: MAX_TWEETS_PER_REQUEST,
         cursor: {
-          id: cursor,
+          updatedAt: cursor,
         },
         skip: 1,
       });
     }
-
     const res = {
       data,
-      _count: data.length,
-      cursor: data[data.length - 1].id,
+      _count: data?.length,
+      cursor: data[data.length - 1]?.updatedAt ?? undefined,
     };
     return NextResponse.json(res, { status: 201 });
   } catch (e) {
@@ -83,11 +84,9 @@ export async function POST(request: Request) {
     body: string;
   };
 
-  if (!userId)
-    return NextResponse.json({ error: "No user id found" }, { status: 500 });
+  if (!userId) return NextResponse.json({ error: "No user id found" }, { status: 500 });
 
-  if (!body)
-    return NextResponse.json({ error: "No body found" }, { status: 500 });
+  if (!body) return NextResponse.json({ error: "No body found" }, { status: 500 });
 
   await db.tweet.create({
     data: {

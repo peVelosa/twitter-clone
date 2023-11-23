@@ -37,7 +37,7 @@ model User {
 model Tweet {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @unique @updatedAt
 
   body    String
   owner   User   @relation(name: "owner_tweet", fields: [ownerId], references: [id], onDelete: Cascade)

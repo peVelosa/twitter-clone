@@ -4,16 +4,17 @@ import { useInView } from "react-intersection-observer";
 type InfiniteRenderProps = {
   children: React.ReactNode;
   fetchNextPage: () => void;
+  hasNextPage: boolean
 };
 
-const InfiniteRender = ({ children, fetchNextPage }: InfiniteRenderProps) => {
+const InfiniteRender = ({ children, fetchNextPage, hasNextPage }: InfiniteRenderProps) => {
   const { ref, inView } = useInView();
 
   useEffect(() => {
-    if (inView) {
+    if (inView && hasNextPage) {
       fetchNextPage();
     }
-  }, [fetchNextPage, inView]);
+  }, [fetchNextPage, inView, hasNextPage]);
 
   return (
     <>

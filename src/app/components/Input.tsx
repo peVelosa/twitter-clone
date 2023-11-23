@@ -14,9 +14,8 @@ const Input: FC<TInput> = ({ field, error }) => {
             <div>
                 <Label htmlFor={field.name} className="block capitalize">{field.name}</Label>
                 <TextInput
-                    id="email"
+                    id={field.name}
                     {...field}
-                    required
                 />
                 {error[field.name as keyof TForm] && <span className='text-red-600'>
                     {error[field.name as keyof TForm]?.message}
