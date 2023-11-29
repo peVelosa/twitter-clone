@@ -1,8 +1,8 @@
-import PageTitle from "@/app/components/PageTitle";
-import { getUserData } from "@/app/utils/user";
+import PageTitle from "@/components/PageTitle";
+import { getUserData } from "@/utils/user";
 import ClientProfilePage from "./ClientProfilePage";
-import { getTweetsFromUser } from "@/app/utils/tweets";
-import ProfileInfo from "@/app/components/Profile/ProfileInfo";
+import { getTweetsFromUser } from "@/utils/tweets";
+import ProfileInfo from "@/components/Profile/ProfileInfo";
 import {
   dehydrate,
   HydrationBoundary,

@@ -1,9 +1,9 @@
 "use client";
 
-import { getTweetsFromUser } from "@/app/utils/tweets";
+import { getTweetsFromUser } from "@/utils/tweets";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import InfiniteRender from "@/app/components/InfiniteRender";
-import Tweet from "@/app/components/Tweet/Tweet";
+import InfiniteRender from "@/components/InfiniteRender";
+import Tweet from "@/components/Tweet/Tweet";
 import type { FC } from "react";
 
 type ClientProfilePageProps = {

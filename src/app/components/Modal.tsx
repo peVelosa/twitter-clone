@@ -16,7 +16,7 @@ const Modal: FC<ModalProps> = ({ isOpen, onClose, size, header, children }) => {
     <>
       <FlowModal show={isOpen} onClose={onClose} dismissible size={size}>
         <FlowModal.Header>{header}</FlowModal.Header>
-        <FlowModal.Body >
+        <FlowModal.Body>
           {children}
         </FlowModal.Body>
       </FlowModal>

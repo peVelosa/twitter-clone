@@ -15,6 +15,11 @@ export const getUserData = async ({ userName, signal }: getUserByUserNameProps):
 
   return res.data;
 };
+export const getCurrentUserData = async ({ userName, signal }: getUserByUserNameProps): Promise<TUserProfile> => {
+  const res = await axios.get<TUserProfile>(`/user/${userName}/current`, { signal });
+
+  return res.data;
+};
 
 type updateUser = TForm & { originalUserName: string } & AxiosSignal;
 export const updateUser = async ({

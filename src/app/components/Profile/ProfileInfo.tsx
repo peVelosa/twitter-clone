@@ -5,9 +5,10 @@ import { TUserProfile } from "@/types/db";
 import { useQuery } from "@tanstack/react-query";
 import ImageWithFallback from "../ImageWithFallback";
 import EditProfile from "./EditProfile";
-import { type FC } from "react";
 import FollowingUsers from "./FollowingUsers";
 import FollowersUsers from "./FollowersUsers";
+import { type FC } from "react";
+import { getCurrentUserData } from "@/app/utils/user";
 
 type ProfileInfoProps = {
     userName: string

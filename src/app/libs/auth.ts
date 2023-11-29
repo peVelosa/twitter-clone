@@ -1,12 +1,13 @@
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { db } from "@/app/libs/db";
-import GithubProvider from "next-auth/providers/github";
-import CredentialsProvider from "next-auth/providers/credentials";
-import jwt from "jsonwebtoken";
-import type { JWT } from "next-auth/jwt";
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import { db } from '@/app/libs/db';
+import GithubProvider from 'next-auth/providers/github';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import jwt from 'jsonwebtoken';
+import type { JWT } from 'next-auth/jwt';
 
-import type { NextAuthOptions } from "next-auth";
-import axios from "./axios";
+import type { NextAuthOptions } from 'next-auth';
+import axios from './axios';
+import { getCurrentUserData } from '../utils/user';
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
@@ -48,11 +49,19 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async session({ session, user }) {
+      const currUser = await getCurrentUserData({ userName: user.userName });
       if (session?.user) {
         session.user.id = user.id;
         session.user.userName = user.userName;
       }
-      return session;
+
+      return {
+        ...session,
+        user: {
+          ...session?.user,
+          ...currUser,
+        },
+      };
     },
   },
   // callbacks: {
@@ -102,12 +111,6 @@ export const authOptions: NextAuthOptions = {
   // debug: process.env.NODE_ENV === "development",
 };
 
-async function fetchUser({
-  userName,
-  password,
-}: {
-  userName: string;
-  password: string;
-}) {
-  return (await axios.get("/user", { params: { userName, password } })).data;
+async function fetchUser({ userName, password }: { userName: string; password: string }) {
+  return (await axios.get('/user', { params: { userName, password } })).data;
 }

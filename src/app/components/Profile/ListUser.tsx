@@ -8,6 +8,7 @@ type ListUserProps = {
 }
 
 const ListUser: FC<ListUserProps> = ({ list }) => {
+
     return (
         <>
             <div className='flex flex-col gap-4'>
