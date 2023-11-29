@@ -3,7 +3,6 @@ import Modal from '../Modal'
 import { useQuery } from '@tanstack/react-query'
 import { getUserFollowers } from '@/app/utils/user'
 import ListUser from './ListUser'
-import useCurrentUser from '@/app/hooks/useCurrentUser'
 
 type FollowersUsersProps = { followers: number, userName: string }
 
