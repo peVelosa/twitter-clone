@@ -1,33 +1,33 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
 
-const config = {
+const config: Config = {
   content: [
-    "./node_modules/flowbite-react/**/*.js",
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    './node_modules/flowbite-react/**/*.js',
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
       minHeight: {
-        screen: "100svh",
+        screen: '100svh',
       },
       backgroundColor: {
-        default: "rgb(15,23,42)",
-        ghost: "rgb(75, 85, 99)",
+        default: 'rgb(15,23,42)',
+        ghost: 'rgb(75, 85, 99)',
       },
       backgroundOpacity: {
-        default: "0.8",
+        default: '0.8',
       },
       colors: {
-        default: "rgb(250,250,250)",
-        blue: "rgb(56, 189, 248)",
+        default: 'rgb(250,250,250)',
+        blue: 'rgb(56, 189, 248)',
       },
       borderColor: {
-        default: "rgb(250,250,250)",
+        default: 'rgb(250,250,250)',
       },
     },
   },
-  plugins: [require("flowbite/plugin")],
+  plugins: [require('flowbite/plugin')],
 };
 export default config;

@@ -1,5 +1,5 @@
-import { db } from "@/app/libs/db";
-import { NextResponse } from "next/server";
+import { db } from '@/app/libs/db';
+import { NextResponse } from 'next/server';
 
 type RouteProps = {
   params: {
@@ -8,7 +8,7 @@ type RouteProps = {
 };
 
 export async function GET(req: Request, { params: { userName } }: RouteProps) {
-  if (!userName) throw new Error("No username provided"); //error
+  if (!userName) throw new Error('No username provided'); //error
   try {
     const user = await db.user.findUnique({
       where: {
@@ -40,14 +40,14 @@ export async function GET(req: Request, { params: { userName } }: RouteProps) {
   } catch (e) {
     //handle erro
     console.error(e);
-    return NextResponse.json("Something went wrong");
+    return NextResponse.json('Something went wrong');
   }
 }
 
 export async function PUT(req: Request, { params: { userName } }: RouteProps) {
   const { data } = await req.json();
   try {
-    const user = await db.user.update({
+    await db.user.update({
       where: {
         userName: userName,
       },

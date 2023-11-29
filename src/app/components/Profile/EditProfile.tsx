@@ -1,6 +1,5 @@
-'use client'
+
 import { useSession } from "next-auth/react"
-import { useParams } from "next/navigation";
 import { Button, Modal } from 'flowbite-react'
 import { useForm, SubmitHandler, Controller } from "react-hook-form"
 import Input from "../Input";
@@ -25,7 +24,6 @@ const EditProfile = ({ user }: { user: TUserProfile }) => {
     const queryClient = useQueryClient()
 
     const { data: session, update } = useSession()
-    const params = useParams()
 
     const router = useRouter()
 
@@ -80,7 +78,7 @@ const EditProfile = ({ user }: { user: TUserProfile }) => {
         mutate(data)
     }
 
-    const isOwnProfile = user.userName === params?.userName
+    const isOwnProfile = user.userName === session?.user?.userName
 
     if (!session?.user || !user || !isOwnProfile) {
         return <></>

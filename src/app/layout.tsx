@@ -19,7 +19,7 @@ export default function RootLayout({
 }) {
   return (
     <Providers>
-      <html lang="en">
+      <html lang="en" className="dark">
         <body
           className={`${inter.className} min-h-screen w-screen overflow-x-hidden bg-default pb-8 text-default`}
         >

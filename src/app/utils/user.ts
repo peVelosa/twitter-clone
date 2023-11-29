@@ -31,3 +31,14 @@ export const updateUser = async ({
     signal,
   });
 };
+
+export const getUserFollowing = async ({ userName, signal }: getUserByUserNameProps) => {
+  const res = await axios.get(`/user/${userName}/following`, { signal });
+
+  return res.data;
+};
+export const getUserFollowers = async ({ userName, signal }: getUserByUserNameProps) => {
+  const res = await axios.get(`/user/${userName}/followers`, { signal });
+
+  return res.data;
+};

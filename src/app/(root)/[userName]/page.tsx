@@ -42,6 +42,7 @@ const ProfilePage: FC<ProfilePageProps> = async ({ params: { userName } }) => {
     <>
       <HydrationBoundary state={dehydrate(queryClient)}>
         <PageTitle title={user.name} />
+        {/* ajustar page title */}
         <div className="isolate">
           <ProfileInfo userName={userName} />
           <ClientProfilePage

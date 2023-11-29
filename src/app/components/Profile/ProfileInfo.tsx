@@ -5,7 +5,9 @@ import { TUserProfile } from "@/types/db";
 import { useQuery } from "@tanstack/react-query";
 import ImageWithFallback from "../ImageWithFallback";
 import EditProfile from "./EditProfile";
-import type { FC } from "react";
+import { type FC } from "react";
+import FollowingUsers from "./FollowingUsers";
+import FollowersUsers from "./FollowersUsers";
 
 type ProfileInfoProps = {
     userName: string
@@ -45,8 +47,8 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ userName }) => {
                         }).format(new Date(createdAt))}
                     </h4>
                     <div className="flex items-center gap-4">
-                        <button>Following {following.length}</button>
-                        <button>Followers {followedBy.length}</button>
+                        <FollowingUsers following={following.length} userName={userName} />
+                        <FollowersUsers followers={followedBy.length} userName={userName} />
                     </div>
                 </div>
                 <EditProfile user={user} />

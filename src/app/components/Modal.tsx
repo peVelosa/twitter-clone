@@ -1,31 +1,25 @@
-import { Dialog } from "@headlessui/react";
-import { twMerge } from "tailwind-merge";
 import type { FC } from "react";
+import { Modal as FlowModal, type ModalSizes, } from 'flowbite-react'
+
 
 type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
-  className?: React.ComponentProps<"div">["className"];
+  // className?: React.ComponentProps<"div">["className"];
+  header: string,
+  size?: keyof ModalSizes
 };
 
-const Modal: FC<ModalProps> = ({ isOpen, onClose, className, children }) => {
+const Modal: FC<ModalProps> = ({ isOpen, onClose, size, header, children }) => {
   return (
     <>
-      <Dialog
-        open={isOpen}
-        onClose={onClose}
-        className={"relative z-50 text-black"}
-      >
-        <Dialog.Panel
-          className={twMerge(
-            "fixed inset-0 top-1/3 z-50 mx-auto h-fit max-w-lg rounded-lg bg-slate-300 p-4",
-            className,
-          )}
-        >
+      <FlowModal show={isOpen} onClose={onClose} dismissible size={size}>
+        <FlowModal.Header>{header}</FlowModal.Header>
+        <FlowModal.Body >
           {children}
-        </Dialog.Panel>
-      </Dialog>
+        </FlowModal.Body>
+      </FlowModal>
     </>
   );
 };
