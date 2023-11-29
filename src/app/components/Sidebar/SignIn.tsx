@@ -32,6 +32,7 @@ const SignIn = () => {
       <Modal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
+        header="Sign In"
       >
         <form
           className="grid w-full gap-4"
