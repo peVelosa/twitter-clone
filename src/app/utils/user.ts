@@ -47,3 +47,15 @@ export const getUserFollowers = async ({ userName, signal }: getUserByUserNamePr
 
   return res.data;
 };
+
+type followProps = getUserByUserNameProps & {
+  id: string;
+};
+
+export const followUser = async ({ userName, signal, id }: followProps) => {
+  await axios.put(`/user/${userName}/current`, { signal, data: { id, action: 'follow' } });
+};
+
+export const unfollowUser = async ({ userName, signal, id }: followProps) => {
+  await axios.put(`/user/${userName}/current`, { signal, data: { id, action: 'unfollow' } });
+};

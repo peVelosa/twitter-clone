@@ -5,10 +5,10 @@ import { TUserProfile } from "@/types/db";
 import { useQuery } from "@tanstack/react-query";
 import ImageWithFallback from "../ImageWithFallback";
 import EditProfile from "./EditProfile";
-import FollowingUsers from "./FollowingUsers";
-import FollowersUsers from "./FollowersUsers";
+import { getUserData } from "@/app/utils/user";
+import FollowingButton from "./FollowingButton";
+import FollowersButton from "./FollowersButton";
 import { type FC } from "react";
-import { getCurrentUserData } from "@/app/utils/user";
 
 type ProfileInfoProps = {
     userName: string
@@ -17,11 +17,15 @@ type ProfileInfoProps = {
 const ProfileInfo: FC<ProfileInfoProps> = ({ userName }) => {
     const { data: user } = useQuery<TUserProfile>({
         queryKey: ['profile', userName],
+        queryFn: async () => await getUserData({
+            userName,
+            signal: new AbortController().signal,
+        }),
     })
 
     if (!user) return
 
-    const { name, following, followedBy, image, createdAt } = user
+    const { name, image, createdAt } = user
 
     return (
         <>
@@ -48,8 +52,8 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ userName }) => {
                         }).format(new Date(createdAt))}
                     </h4>
                     <div className="flex items-center gap-4">
-                        <FollowingUsers following={following.length} userName={userName} />
-                        <FollowersUsers followers={followedBy.length} userName={userName} />
+                        <FollowingButton userName={userName} />
+                        <FollowersButton userName={userName} />
                     </div>
                 </div>
                 <EditProfile user={user} />

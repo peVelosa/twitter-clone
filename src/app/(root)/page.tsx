@@ -6,7 +6,6 @@ import { getCurrentUserData } from "../utils/user";
 import useServerSession from "../hooks/useServerSession";
 
 const Home = async () => {
-  const session = await useServerSession()
   const queryClient = new QueryClient()
 
   await queryClient.prefetchInfiniteQuery({

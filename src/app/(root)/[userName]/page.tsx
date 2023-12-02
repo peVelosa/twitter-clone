@@ -1,5 +1,5 @@
 import PageTitle from "@/components/PageTitle";
-import { getUserData } from "@/utils/user";
+import { getUserData, getUserFollowers, getUserFollowing } from "@/utils/user";
 import ClientProfilePage from "./ClientProfilePage";
 import { getTweetsFromUser } from "@/utils/tweets";
 import ProfileInfo from "@/components/Profile/ProfileInfo";
@@ -22,13 +22,6 @@ const ProfilePage: FC<ProfilePageProps> = async ({ params: { userName } }) => {
     signal: new AbortController().signal,
   });
 
-  await queryClient.prefetchQuery({
-    queryKey: ['profile', userName],
-    queryFn: async () => await getUserData({
-      userName,
-      signal: new AbortController().signal,
-    }),
-  })
   await queryClient.prefetchInfiniteQuery({
     queryKey: ['tweets', userName],
     queryFn: async ({ signal, pageParam }) =>
@@ -36,6 +29,21 @@ const ProfilePage: FC<ProfilePageProps> = async ({ params: { userName } }) => {
     initialPageParam: "0",
     getNextPageParam: (lastPage, pages) => lastPage?.cursor ?? undefined,
     pages: 1
+  })
+  await queryClient.prefetchQuery({
+    queryKey: ['profile', userName],
+    queryFn: async () => await getUserData({
+      userName,
+      signal: new AbortController().signal,
+    }),
+  })
+  await queryClient.prefetchQuery({
+    queryKey: ['profile', userName, "followers"],
+    queryFn: async ({ signal }) => await getUserFollowers({ userName, signal }),
+  })
+  await queryClient.prefetchQuery({
+    queryKey: ['profile', userName, "following"],
+    queryFn: async ({ signal }) => await getUserFollowing({ userName, signal }),
   })
 
   return (
