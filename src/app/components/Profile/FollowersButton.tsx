@@ -26,7 +26,7 @@ const FollowersButton: FC<FollowersButtonProps> = ({ userName }) => {
 
     return (
         <>
-            <button onClick={onOpen}>Following {followers.data.length}</button>
+            <button onClick={onOpen}>Following {followers?.data.length}</button>
 
             <Modal
                 isOpen={isOpen}
