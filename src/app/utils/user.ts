@@ -1,5 +1,5 @@
 import axios from '@/libs/axios';
-import { TUserProfile } from '@/types/db';
+import { TUser, TUserProfile } from '@/types/db';
 import { TForm } from '../components/Profile/EditProfile';
 
 type AxiosSignal = {
@@ -37,12 +37,12 @@ export const updateUser = async ({
   });
 };
 
-export const getUserFollowing = async ({ userName, signal }: getUserByUserNameProps) => {
+export const getUserFollowing = async ({ userName, signal }: getUserByUserNameProps): Promise<{ data: TUser[] }> => {
   const res = await axios.get(`/user/${userName}/following`, { signal });
 
   return res.data;
 };
-export const getUserFollowers = async ({ userName, signal }: getUserByUserNameProps) => {
+export const getUserFollowers = async ({ userName, signal }: getUserByUserNameProps): Promise<{ data: TUser[] }> => {
   const res = await axios.get(`/user/${userName}/followers`, { signal });
 
   return res.data;

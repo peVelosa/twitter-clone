@@ -5,7 +5,7 @@ import { type TUser } from '@/app/types/db'
 import { type FC } from 'react'
 
 type ListUserProps = {
-    list: TUser[]
+    list?: TUser[]
 }
 
 const ListUser: FC<ListUserProps> = ({ list }) => {
@@ -16,7 +16,7 @@ const ListUser: FC<ListUserProps> = ({ list }) => {
                 {list?.map(user => {
 
                     return (
-                        <div key={user.userName} className='flex items-center gap-4'>
+                        <div key={user.id} className='flex items-center gap-4'>
                             <Link
                                 href={`/${user.userName}`}
                                 className="relative flex h-10 w-10 items-center justify-center overflow-hidden rounded-full"
@@ -44,7 +44,7 @@ const ListUser: FC<ListUserProps> = ({ list }) => {
                                     <span className="text-slate-200">@{user.userName}</span>
                                 </Link>
                             </div>
-                            <IsFollowingComponent targetId={user.id} />
+                            <IsFollowingComponent user={user} />
                         </div>
                     )
                 })}

@@ -13,7 +13,7 @@ const useIsFollowing = ({ userName, targetId }: useIsFollowingProps) => {
     })
     const isFollowing = following?.data?.find(({ id }: { id: string }) => id === targetId)
 
-    return isFollowing
+    return { user: isFollowing, isFollowing: !!isFollowing }
 }
 
 export default useIsFollowing
