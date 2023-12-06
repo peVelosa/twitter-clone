@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Twitter Clone
 
-## Getting Started
+## Technologies Used
 
-First, run the development server:
+This project was developed using the following technologies:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- [Next.js 13](https://nextjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [React Query](https://react-query.tanstack.com/)
+- [NextAuth (GitHub)](https://next-auth.js.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Prisma](https://www.prisma.io/)
+- [Supabase](https://supabase.io/)
+
+## Key Features
+
+- **User Registration and Authentication:** Users can securely create accounts and log in using their GitHub accounts.
+
+- **Create and Delete Posts:** Users can create and delete their own posts.
+
+- **Like and Comment on Posts:** Users can like and comment on posts from other users.
+
+- **Like and Delete Comments:** Users can like and delete comments on posts.
+
+## Setup
+
+To run this project locally, follow these steps:
+
+1. Clone the repository to your development environment: `git clone https://github.com/peVelosa/twitter-clone.git`
+2. Navigate to the project folder: `cd twitter-clone`
+3. Install project dependencies:`npm install`
+4. Configure the necessary environment variables for authentication, database, and other settings.
+5. Start the development server:`npm run dev`
+6. Access the application in your browser at [http://localhost:3000](http://localhost:3000).
+7. Create a `.env` file
+8. Add the node variable
+```env
+DATABASE_URL=<your-database-url>
+GITHUB_ID=<your-github-ID>
+GITHUB_SECRET=<your-github-secret>
+NEXTAUTH_SECRET=<your-nextauth-secret>
+NEXTAUTH_URL=<your-nextauth-url>
+NEXT_PUBLIC_BASE_URL=<your-nextpublic-baseulr>
 ```
+You can get your github ID and github Secret by going on `setting > Developer setting > OAuth Apps > New OAuth App`.  
+Then the field `Homepage URL` you add your website url like `http://localhost:3000`, and on `Authorization callback URL` you add something like `http://localhost:3000/api/auth/callback/github`.  
+If you want to use it on both prod. and dev. environment you need to configurate tow OAuth apps.
+9. Consider change the prisma provider if you want.
+10. If you want to create a database on supabase consider follow the docs [supabase](https://supabase.com/docs/guides/getting-started)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Contribution
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This is an ongoing project, and contributions are welcome. Feel free to open issues and submit pull requests with improvements.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Author
 
-## Learn More
+- Pedro Velosa
 
-To learn more about Next.js, take a look at the following resources:
+## Acknowledgments
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Special acknowledgement to [Code With Antonio](https://www.youtube.com/@codewithantonio) who has a amazing video that i took some inspiration like the models and design
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+Enjoy exploring and contributing to the Twitter Clone! For more information and access to the repository files, visit [https://github.com/peVelosa/twitter-clone](https://github.com/peVelosa/twitter-clone). If you have any questions or suggestions, please don't hesitate to reach out.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
