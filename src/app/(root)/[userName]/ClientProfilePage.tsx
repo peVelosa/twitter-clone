@@ -19,7 +19,7 @@ const ClientProfilePage: FC<ClientProfilePageProps> = ({
     queryFn: async ({ signal, pageParam }) =>
       await getTweetsFromUser({ pageParam, signal, userName: userName }),
     initialPageParam: "0",
-    getNextPageParam: (lastPage, pages) => lastPage?.cursor ?? undefined,
+    getNextPageParam: (lastPage) => lastPage?.cursor ?? undefined,
   });
 
   return (

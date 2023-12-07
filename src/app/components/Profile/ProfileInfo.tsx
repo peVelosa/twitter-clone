@@ -25,12 +25,22 @@ const ProfileInfo: FC<ProfileInfoProps> = ({ userName }) => {
 
     if (!user) return
 
-    const { name, image, createdAt } = user
+    const { name, image, createdAt, background } = user
 
     return (
         <>
             <div className="grid grid-cols-1 grid-rows-[8rem_50px_50px_auto] bg-white">
-                <div className="col-start-1 row-span-2 row-start-1 bg-slate-300" />
+                <div className="col-start-1 row-span-2 row-start-1 relative">
+                    {background ? (
+                        <ImageWithFallback
+                            src={background}
+                            width={1000}
+                            height={1000}
+                            alt="user background profile image"
+                            className="w-full h-full"
+                        />
+                    ) : <div className="w-full h-full bg-slate-400" />}
+                </div>
                 <ImageWithFallback
                     src={image}
                     width={100}
