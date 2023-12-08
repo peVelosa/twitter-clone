@@ -3,11 +3,11 @@
 import { TTweet } from "@/types/db";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { type FC } from "react";
-import { HeartIcon, MessageCircleIcon } from "lucide-react";
+import { MessageCircleIcon } from "lucide-react";
 import { generateRColor } from "@/utils/functions";
 import ImageWithFallback from "../ImageWithFallback";
-import { useSession } from "next-auth/react";
+import LikeTweet from "./LikeTweet";
+import { type FC } from "react";
 
 type TweetProps = TTweet;
 
@@ -58,11 +58,8 @@ const Tweet: FC<TweetProps> = ({
           </div>
           <div className="col-start-2 row-start-2">
             <p className="whitespace-nowrap">{body}</p>
-            <div className="mt-4 flex items-center gap-4">
-              <div className="inline-flex gap-2">
-                <HeartIcon />
-                {_likes}
-              </div>
+            <div className="mt-4 flex items-center gap-4" onClick={e => e.stopPropagation()}>
+              <LikeTweet likes={likes} count={_likes} Qkey={["tweets"]} tweetId={tweetId} />
               <div className="inline-flex gap-2">
                 <MessageCircleIcon /> {_comments}
               </div>

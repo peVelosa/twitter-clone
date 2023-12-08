@@ -2,7 +2,6 @@ import PageTitle from "@/components/PageTitle";
 import { getUserData, getUserFollowers, getUserFollowing } from "@/utils/user";
 import ClientProfilePage from "./ClientProfilePage";
 import { getTweetsFromUser } from "@/utils/tweets";
-import ProfileInfo from "@/components/Profile/ProfileInfo";
 import {
   dehydrate,
   HydrationBoundary,
@@ -52,7 +51,6 @@ const ProfilePage: FC<ProfilePageProps> = async ({ params: { userName } }) => {
         <PageTitle title={user.name} />
         {/* ajustar page title */}
         <div className="isolate">
-          <ProfileInfo userName={userName} />
           <ClientProfilePage
             userName={userName}
           />

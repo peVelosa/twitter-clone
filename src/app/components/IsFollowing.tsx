@@ -36,7 +36,7 @@ const IsFollowingComponent: FC<IsFollowingComponentProps> = ({ user }) => {
 
             return { previousFollowing }
         },
-        onError: (err, newTodo, context) => {
+        onError: (_, __, context) => {
             queryClient.setQueryData(['profile', session?.user.userName, 'following'], context?.previousFollowing)
         },
         onSettled: () => {
@@ -54,8 +54,7 @@ const IsFollowingComponent: FC<IsFollowingComponentProps> = ({ user }) => {
                 >
                     {isFollowing ? 'Unfollow' : 'Follow'}
                 </Button>
-            )
-            }
+            )}
         </>
     )
 }

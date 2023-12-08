@@ -5,6 +5,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import InfiniteRender from "@/components/InfiniteRender";
 import Tweet from "@/components/Tweet/Tweet";
 import type { FC } from "react";
+import ProfileInfo from "@/app/components/Profile/ProfileInfo";
 
 type ClientProfilePageProps = {
   userName: string;
@@ -24,6 +25,8 @@ const ClientProfilePage: FC<ClientProfilePageProps> = ({
 
   return (
     <>
+      <ProfileInfo userName={userName} />
+
       <section>
         <InfiniteRender fetchNextPage={fetchNextPage} hasNextPage={hasNextPage}>
           {tweets?.pages?.map(

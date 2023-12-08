@@ -36,11 +36,24 @@ export const getTweetsFromUser = async ({
 
 type TweetProps = {
   signal?: AbortSignal;
-  id: string;
+  tweetId: string;
 };
 
-export const getTweet = async ({ signal, id }: TweetProps): Promise<TTweet> => {
-  const res = await axios.get<TTweet>(`/tweet/${id}`, { signal });
+export const getTweet = async ({ signal, tweetId }: TweetProps): Promise<TTweet> => {
+  const res = await axios.get<TTweet>(`/tweet/${tweetId}`, { signal });
 
   return res.data;
+};
+
+type ActionTweetProps = {
+  signal?: AbortSignal;
+  tweetId: string;
+  userId: string;
+};
+
+export const likeTweet = async ({ signal, tweetId, userId }: ActionTweetProps) => {
+  await axios.put<TTweet>(`/tweet/${tweetId}/like`, { signal, userId });
+};
+export const unlikeTweet = async ({ signal, tweetId, userId }: ActionTweetProps) => {
+  await axios.put<TTweet>(`/tweet/${tweetId}/unlike`, { signal, userId });
 };
