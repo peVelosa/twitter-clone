@@ -10,9 +10,10 @@ type LikeTweetProps = {
     count: number
     Qkey: QueryKey,
     tweetId: string
+    isInfiniteQuery?: boolean
 }
 
-const LikeTweet: FC<LikeTweetProps> = ({ likes, count, Qkey, tweetId }) => {
+const LikeTweet: FC<LikeTweetProps> = ({ likes, count, Qkey, tweetId, isInfiniteQuery = true }) => {
 
     const { data: session } = useSession()
     const queryClient = useQueryClient()
@@ -27,28 +28,43 @@ const LikeTweet: FC<LikeTweetProps> = ({ likes, count, Qkey, tweetId }) => {
             await queryClient.cancelQueries({ queryKey: Qkey })
             const previousLikes = queryClient.getQueryData(Qkey)
 
-            queryClient.setQueryData<unknown>(Qkey, (old: InfiniteData<TInfiniteResponse<TTweet[]>>) => (
-                {
-                    ...old,
-                    pages: old.pages.map(page => ({
-                        ...page,
-                        data: page.data.map(tweet => {
-                            if (tweet.id === tweetId) {
-                                return {
-                                    ...tweet,
-                                    likes: userHasLiked ? (
-                                        tweet.likes.filter(t => t.id !== session?.user.id)
-                                    ) : (
-                                        [...tweet.likes, { id: session?.user.id }]
-                                    ),
-                                    _count: { ...tweet._count, likes: userHasLiked ? tweet._count.likes - 1 : tweet._count.likes + 1 }
+            if (isInfiniteQuery) {
+                queryClient.setQueryData<unknown>(Qkey, (old: InfiniteData<TInfiniteResponse<TTweet[]>>) => (
+                    {
+                        ...old,
+                        pages: old.pages.map(page => ({
+                            ...page,
+                            data: page.data.map(tweet => {
+                                if (tweet.id === tweetId) {
+                                    return {
+                                        ...tweet,
+                                        likes: userHasLiked ? (
+                                            tweet.likes.filter(t => t.id !== session?.user.id)
+                                        ) : (
+                                            [...tweet.likes, { id: session?.user.id }]
+                                        ),
+                                        _count: { ...tweet._count, likes: userHasLiked ? tweet._count.likes - 1 : tweet._count.likes + 1 }
+                                    }
                                 }
-                            }
-                            return { ...tweet }
-                        }),
-                    }))
-                }
-            ))
+                                return { ...tweet }
+                            }),
+                        }))
+                    }
+                ))
+            } else {
+                queryClient.setQueryData<unknown>(Qkey, (old: TTweet) => (
+                    {
+                        ...old,
+                        likes: userHasLiked ? (
+                            old.likes.filter(t => t.id !== session?.user.id)
+                        ) : (
+                            [...old.likes, { id: session?.user.id }]
+                        ),
+                        _count: { ...old._count, likes: userHasLiked ? old._count.likes - 1 : old._count.likes + 1 }
+                    }
+                ))
+            }
+
 
             return { previousLikes }
         },

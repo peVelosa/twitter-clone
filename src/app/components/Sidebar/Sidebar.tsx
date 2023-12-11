@@ -7,6 +7,7 @@ import SignOut from "./SignOut";
 
 const Sidebar = async () => {
   const session = await useServerSession();
+
   return (
     <aside className="grid h-full w-fit shrink-0 items-start gap-4 py-2 pr-4">
       {links.map(({ label, icon, href, className, isPrivate }) =>

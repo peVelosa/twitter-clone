@@ -9,7 +9,6 @@ type RouteProps = {
 
 export async function GET(request: Request, { params: { id } }: RouteProps) {
   try {
-    console.log(id);
     const data = await db.tweet.findUnique({
       where: {
         id,
@@ -34,7 +33,8 @@ export async function GET(request: Request, { params: { id } }: RouteProps) {
         _count: true,
       },
     });
-    return NextResponse.json({ data }, { status: 201 });
+
+    return NextResponse.json(data, { status: 201 });
   } catch (e) {
     console.error(e);
     return NextResponse.json({}, { status: 404 });
