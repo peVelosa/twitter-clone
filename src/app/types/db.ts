@@ -27,3 +27,5 @@ export type TUserProfile = TUser & {
   followedBy: { id: string }[];
   following: { id: string }[];
 };
+
+export type TComment = {};

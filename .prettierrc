@@ -3,7 +3,7 @@
   "plugins": [
     "prettier-plugin-tailwindcss"
   ],
-  "printWidth": 120,
+  "printWidth": 80,
   "arrowParens": "always",
   "embeddedLanguageFormatting": "auto",
   "singleQuote": true,

@@ -6,17 +6,25 @@ type AxiosSignal = {
   signal?: AbortSignal;
 };
 
-type getUserByUserNameProps = {
+type UserNameProps = {
   userName: string;
 } & AxiosSignal;
 
-export const getUserData = async ({ userName, signal }: getUserByUserNameProps): Promise<TUserProfile> => {
+export const getUserData = async ({
+  userName,
+  signal,
+}: UserNameProps): Promise<TUserProfile> => {
   const res = await axios.get<TUserProfile>(`/user/${userName}`, { signal });
 
   return res.data;
 };
-export const getCurrentUserData = async ({ userName, signal }: getUserByUserNameProps): Promise<TUserProfile> => {
-  const res = await axios.get<TUserProfile>(`/user/${userName}/current`, { signal });
+export const getCurrentUserData = async ({
+  userName,
+  signal,
+}: UserNameProps): Promise<TUserProfile> => {
+  const res = await axios.get<TUserProfile>(`/user/${userName}/current`, {
+    signal,
+  });
 
   return res.data;
 };
@@ -37,25 +45,37 @@ export const updateUser = async ({
   });
 };
 
-export const getUserFollowing = async ({ userName, signal }: getUserByUserNameProps): Promise<{ data: TUser[] }> => {
+export const getUserFollowing = async ({
+  userName,
+  signal,
+}: UserNameProps): Promise<{ data: TUser[] }> => {
   const res = await axios.get(`/user/${userName}/following`, { signal });
 
   return res.data;
 };
-export const getUserFollowers = async ({ userName, signal }: getUserByUserNameProps): Promise<{ data: TUser[] }> => {
+export const getUserFollowers = async ({
+  userName,
+  signal,
+}: UserNameProps): Promise<{ data: TUser[] }> => {
   const res = await axios.get(`/user/${userName}/followers`, { signal });
 
   return res.data;
 };
 
-type followProps = getUserByUserNameProps & {
+type followProps = UserNameProps & {
   id: string;
 };
 
 export const followUser = async ({ userName, signal, id }: followProps) => {
-  await axios.put(`/user/${userName}/current`, { signal, data: { id, action: 'follow' } });
+  await axios.put(`/user/${userName}/current`, {
+    signal,
+    data: { id, action: 'follow' },
+  });
 };
 
 export const unfollowUser = async ({ userName, signal, id }: followProps) => {
-  await axios.put(`/user/${userName}/current`, { signal, data: { id, action: 'unfollow' } });
+  await axios.put(`/user/${userName}/current`, {
+    signal,
+    data: { id, action: 'unfollow' },
+  });
 };

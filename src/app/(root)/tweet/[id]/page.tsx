@@ -1,4 +1,4 @@
-import { getTweet } from '@/app/utils/tweets'
+import { getCommentsFromTweet, getTweet } from '@/app/utils/tweets'
 import { QueryClient } from '@tanstack/react-query'
 import React from 'react'
 import ClientTweetPage from './ClientTweetPage'
@@ -11,6 +11,17 @@ const TweetPage = async ({ params: { id } }: { params: { id: string } }) => {
         queryKey: ['tweet', id],
         queryFn: async ({ signal }) => await getTweet({ tweetId: id, signal }),
     })
+
+    await queryClient.prefetchInfiniteQuery({
+        queryKey: ['tweet', id, "comments"],
+        queryFn: async ({ signal }) => await getCommentsFromTweet({ tweetId: id, signal }),
+
+        initialPageParam: "0",
+        // getNextPageParam: (lastPage) => lastPage?.cursor ?? undefined,
+        getNextPageParam: (lastPage) => undefined,
+        pages: 1
+    })
+
 
     return (
         <>

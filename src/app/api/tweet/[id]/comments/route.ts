@@ -1,5 +1,11 @@
-import { NextResponse } from 'next/server';
 import { db } from '@/app/libs/db';
+import { NextResponse } from 'next/server';
+
+type RouteProps = {
+  params: {
+    id: string;
+  };
+};
 
 const MAX_TWEETS_PER_REQUEST = 5;
 
@@ -11,7 +17,7 @@ export async function GET(request: Request) {
     let data;
 
     if (!cursor || cursor === '0') {
-      data = await db.tweet.findMany({
+      data = await db.comment.findMany({
         select: {
           id: true,
           body: true,
@@ -37,7 +43,7 @@ export async function GET(request: Request) {
         take: MAX_TWEETS_PER_REQUEST,
       });
     } else {
-      data = await db.tweet.findMany({
+      data = await db.comment.findMany({
         select: {
           id: true,
           body: true,
@@ -62,7 +68,7 @@ export async function GET(request: Request) {
         },
         take: MAX_TWEETS_PER_REQUEST,
         cursor: {
-          updatedAt: cursor,
+          id: cursor,
         },
         skip: 1,
       });
@@ -71,7 +77,7 @@ export async function GET(request: Request) {
     const res = {
       data,
       _count: data?.length,
-      cursor: data[data.length - 1]?.updatedAt ?? undefined,
+      cursor: data[data.length - 1]?.id ?? undefined,
     };
 
     return NextResponse.json(res, { status: 201 });
@@ -80,24 +86,35 @@ export async function GET(request: Request) {
     return NextResponse.json({}, { status: 404 });
   }
 }
-export async function POST(request: Request) {
-  const { userId, body } = (await request.json()) as {
-    userId: string;
-    body: string;
-  };
 
-  if (!userId)
-    return NextResponse.json({ error: 'No user id found' }, { status: 500 });
+export async function POST(
+  request: Request,
+  { params: { id: tweetId } }: RouteProps,
+) {
+  if (!tweetId)
+    return NextResponse.json({ error: 'No tweet found' }, { status: 500 });
 
-  if (!body)
-    return NextResponse.json({ error: 'No body found' }, { status: 500 });
+  const {
+    data: { body, ownerId },
+  } = await request.json();
+  if (!body || !ownerId)
+    return NextResponse.json(
+      { error: 'Something went wrong' },
+      { status: 500 },
+    );
 
-  await db.tweet.create({
+  await db.tweet.update({
+    where: {
+      id: tweetId,
+    },
     data: {
-      body,
-      ownerId: userId,
+      comments: {
+        create: {
+          ownerId,
+          body,
+        },
+      },
     },
   });
-
   return NextResponse.json({}, { status: 201 });
 }
