@@ -28,4 +28,12 @@ export type TUserProfile = TUser & {
   following: { id: string }[];
 };
 
-export type TComment = {};
+export type TComment = {
+  id: string;
+  tweetId: string;
+  body: string;
+  owner: TUser;
+  likes: { id: string }[];
+  updatedAt: string;
+  _count: { likes: number };
+};

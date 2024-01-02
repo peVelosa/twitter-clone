@@ -9,6 +9,7 @@ import ImageWithFallback from '../ImageWithFallback';
 import LikeTweetIQ from './LikeTweetIQ';
 import { type FC } from 'react';
 import { type QueryKey } from '@tanstack/react-query';
+import Delete from './Delete';
 
 type TweetProps = TTweet & { QKey: QueryKey };
 
@@ -60,6 +61,11 @@ const Tweet: FC<TweetProps> = ({
               <span className='font-bold hover:underline'>{name}</span>
               <span className='text-slate-200'>@{userName}</span>
             </Link>
+            <Delete
+              QKey={QKey}
+              tweetId={tweetId}
+              ownerId={ownerId}
+            />
           </div>
           <div className='col-start-2 row-start-2'>
             <p className='whitespace-nowrap'>{body}</p>

@@ -40,3 +40,22 @@ export async function GET(request: Request, { params: { id } }: RouteProps) {
     return NextResponse.json({}, { status: 404 });
   }
 }
+
+export async function DELETE(request: Request, { params: { id } }: RouteProps) {
+  const { ownerId } = await request.json();
+  if (!ownerId) throw new Error('Something went wrong');
+
+  try {
+    await db.tweet.delete({
+      where: {
+        id,
+        ownerId,
+      },
+    });
+
+    return NextResponse.json({}, { status: 201 });
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json({}, { status: 404 });
+  }
+}

@@ -1,4 +1,4 @@
-import { TInfiniteResponse, TTweet } from '@/types/db';
+import { TComment, TInfiniteResponse, TTweet } from '@/types/db';
 import axios from '@/libs/axios';
 
 type InfiniteQuery = {
@@ -30,6 +30,14 @@ export const postTweet = async ({ body, userId }: postTweetProps) => {
   });
 };
 
+type deleteTweetProps = {
+  ownerId: string;
+  tweetId: string;
+};
+
+export const deleteTweet = async ({ ownerId, tweetId }: deleteTweetProps) => {
+  await axios.delete(`/tweet/${tweetId}`, { data: { ownerId } });
+};
 type getTweetsFromUserProps = InfiniteQuery & { userName: string };
 
 export const getTweetsFromUser = async ({
@@ -68,8 +76,8 @@ export const getCommentsFromTweet = async ({
   signal,
   tweetId,
   pageParam = '0',
-}: getCommentsFromTweetProps): Promise<any> => {
-  const res = await axios.get<any>(
+}: getCommentsFromTweetProps): Promise<TInfiniteResponse<TComment[]>> => {
+  const res = await axios.get<TInfiniteResponse<TComment[]>>(
     `/tweet/${tweetId}/comments?cursor=${pageParam}`,
   );
 

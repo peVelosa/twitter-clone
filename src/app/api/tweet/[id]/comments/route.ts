@@ -9,7 +9,7 @@ type RouteProps = {
 
 const MAX_TWEETS_PER_REQUEST = 5;
 
-export async function GET(request: Request) {
+export async function GET(request: Request, { params: { id } }: RouteProps) {
   try {
     const { searchParams } = new URL(request.url);
     const cursor = searchParams.get('cursor');
@@ -18,6 +18,9 @@ export async function GET(request: Request) {
 
     if (!cursor || cursor === '0') {
       data = await db.comment.findMany({
+        where: {
+          tweetId: id,
+        },
         select: {
           id: true,
           body: true,
@@ -34,6 +37,7 @@ export async function GET(request: Request) {
               id: true,
             },
           },
+          tweetId: true,
           updatedAt: true,
           _count: true,
         },
@@ -44,6 +48,9 @@ export async function GET(request: Request) {
       });
     } else {
       data = await db.comment.findMany({
+        where: {
+          tweetId: id,
+        },
         select: {
           id: true,
           body: true,
@@ -61,6 +68,7 @@ export async function GET(request: Request) {
             },
           },
           updatedAt: true,
+          tweetId: true,
           _count: true,
         },
         orderBy: {
@@ -68,7 +76,7 @@ export async function GET(request: Request) {
         },
         take: MAX_TWEETS_PER_REQUEST,
         cursor: {
-          id: cursor,
+          updatedAt: cursor,
         },
         skip: 1,
       });
@@ -77,7 +85,7 @@ export async function GET(request: Request) {
     const res = {
       data,
       _count: data?.length,
-      cursor: data[data.length - 1]?.id ?? undefined,
+      cursor: data[data.length - 1]?.updatedAt ?? undefined,
     };
 
     return NextResponse.json(res, { status: 201 });
