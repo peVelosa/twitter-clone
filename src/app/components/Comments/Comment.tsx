@@ -7,8 +7,9 @@ import { generateRColor } from '@/utils/functions';
 import ImageWithFallback from '../ImageWithFallback';
 import { type FC } from 'react';
 import { type QueryKey } from '@tanstack/react-query';
+import Delete from './Delete';
 
-type CommentProps = TComment & { Qkey: QueryKey };
+type CommentProps = TComment & { QKey: QueryKey };
 
 const Comment: FC<CommentProps> = ({
   id: commentId,
@@ -16,7 +17,8 @@ const Comment: FC<CommentProps> = ({
   likes,
   _count: { likes: _likes },
   owner: { id: ownerId, image, name, userName },
-  Qkey,
+  tweetId,
+  QKey,
 }) => {
   const router = useRouter();
 
@@ -58,7 +60,12 @@ const Comment: FC<CommentProps> = ({
               <span className='font-bold hover:underline'>{name}</span>
               <span className='text-slate-200'>@{userName}</span>
             </Link>
-            <button></button>
+            <Delete
+              QKey={QKey}
+              tweetId={tweetId}
+              ownerId={ownerId}
+              commentId={commentId}
+            />
           </div>
           <div className='col-start-2 row-start-2'>
             <p className='whitespace-pre break-all'>{body}</p>
@@ -66,7 +73,7 @@ const Comment: FC<CommentProps> = ({
               className='mt-4 flex items-center gap-4'
               onClick={(e) => e.stopPropagation()}
             >
-              {/* <LikeTweet likes={likes} count={_likes} Qkey={Qkey} tweetId={tweetId} /> */}
+              {/* <LikeTweet likes={likes} count={_likes} QKey={QKey} tweetId={tweetId} /> */}
             </div>
           </div>
         </div>

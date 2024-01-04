@@ -72,7 +72,7 @@ const SingleTweet: FC<SingleTweetProps> = ({
           </div>
         </div>
         <NewComment
-          Qkey={['tweet', tweetId]}
+          QKey={['tweet', tweetId]}
           tweetId={tweetId}
         />
       </article>

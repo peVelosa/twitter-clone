@@ -38,6 +38,23 @@ type deleteTweetProps = {
 export const deleteTweet = async ({ ownerId, tweetId }: deleteTweetProps) => {
   await axios.delete(`/tweet/${tweetId}`, { data: { ownerId } });
 };
+
+type deleteCommentProps = {
+  ownerId: string;
+  tweetId: string;
+  commentId: string;
+};
+
+export const deleteComment = async ({
+  ownerId,
+  tweetId,
+  commentId,
+}: deleteCommentProps) => {
+  await axios.delete(`/tweet/${tweetId}/comments/${commentId}`, {
+    data: { ownerId },
+  });
+};
+
 type getTweetsFromUserProps = InfiniteQuery & { userName: string };
 
 export const getTweetsFromUser = async ({

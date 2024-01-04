@@ -11,6 +11,7 @@ const ClientTweetPage = ({ id }: { id: string }) => {
     queryKey: ['tweet', id],
     queryFn: async ({ signal }) => await getTweet({ tweetId: id, signal }),
   });
+
   const {
     data: comments,
     fetchNextPage,
@@ -38,7 +39,7 @@ const ClientTweetPage = ({ id }: { id: string }) => {
             page?.data?.map((comment: TComment) => (
               <CommentComponent
                 {...comment}
-                Qkey={['tweet', id, 'comments']}
+                QKey={['tweet', id]}
                 key={comment.id}
               />
             )),

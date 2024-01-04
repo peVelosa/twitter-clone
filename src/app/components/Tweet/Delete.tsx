@@ -27,8 +27,7 @@ const Delete: FC<DeleteProps> = ({ QKey, ownerId, tweetId }) => {
     mutationFn: async () => await deleteTweet({ tweetId, ownerId }),
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: QKey });
-      const previousTweets = queryClient.getQueryData(QKey);
-      console.log(previousTweets);
+      const previousComments = queryClient.getQueryData(QKey);
 
       queryClient.setQueryData<unknown>(
         QKey,
@@ -40,12 +39,11 @@ const Delete: FC<DeleteProps> = ({ QKey, ownerId, tweetId }) => {
           })),
         }),
       );
-      const previousTweets2 = queryClient.getQueryData(QKey);
-      console.log(previousTweets2);
-      return { previousTweets };
+
+      return { previousComments };
     },
     onError: (_, __, context) => {
-      queryClient.setQueryData(QKey, context?.previousTweets);
+      queryClient.setQueryData(QKey, context?.previousComments);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: [QKey] });

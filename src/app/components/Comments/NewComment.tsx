@@ -11,32 +11,36 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import { commentTweet } from '@/app/utils/tweets';
-import { TComment, TInfiniteResponse } from '@/app/types/db';
+import { TComment, TInfiniteResponse, TTweet } from '@/app/types/db';
 import { adjustTextAreaHeight } from '@/app/utils/helpers';
 
 type NewCommentProps = {
-  Qkey: QueryKey;
+  QKey: QueryKey;
   tweetId: string;
 };
 
-const NewComment: FC<NewCommentProps> = ({ Qkey, tweetId }) => {
+const NewComment: FC<NewCommentProps> = ({ QKey, tweetId }) => {
   const { data: session } = useSession();
   const replyRef = useRef<ElementRef<'textarea'>>(null);
   const [reply, setReply] = useState('');
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationKey: Qkey,
+    mutationKey: QKey,
     mutationFn: async (reply: string) => {
       setReply('');
       await commentTweet({ tweetId, ownerId: session?.user.id, body: reply });
     },
     onMutate: async (reply) => {
-      await queryClient.cancelQueries({ queryKey: [...Qkey, 'comments'] });
-      const previousComments = queryClient.getQueryData([...Qkey, 'comments']);
+      await queryClient.cancelQueries({ queryKey: [...QKey, 'comments'] });
+      await queryClient.cancelQueries({ queryKey: QKey });
 
+      const previousComments = queryClient.getQueryData([...QKey, 'comments']);
+      const previousCommentsCount = queryClient.getQueryData(QKey);
+
+      // Optimistic Update for comments
       queryClient.setQueryData<unknown>(
-        [...Qkey, 'comments'],
+        [...QKey, 'comments'],
         (old: InfiniteData<TInfiniteResponse<TComment[]>>) => ({
           ...old,
 
@@ -45,7 +49,7 @@ const NewComment: FC<NewCommentProps> = ({ Qkey, tweetId }) => {
               _count: 1,
               data: [
                 {
-                  id: Math.floor(Math.random() + 1000),
+                  id: 'no-id',
                   tweetId,
                   owner: { ...session?.user },
                   body: reply,
@@ -60,13 +64,27 @@ const NewComment: FC<NewCommentProps> = ({ Qkey, tweetId }) => {
         }),
       );
 
-      return { previousComments };
+      // Optimistic Update for comments count
+      queryClient.setQueryData<unknown>(QKey, (old: TTweet) => ({
+        ...old,
+        _count: {
+          ...old._count,
+          comments: old._count.comments + 1,
+        },
+      }));
+
+      return { previousComments, previousCommentsCount };
     },
     onError: (_, __, context) => {
-      queryClient.setQueryData(Qkey, context?.previousComments);
+      queryClient.setQueryData(
+        [...QKey, 'comments'],
+        context?.previousComments,
+      );
+      queryClient.setQueryData(QKey, context?.previousCommentsCount);
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: Qkey });
+      queryClient.invalidateQueries({ queryKey: QKey });
+      queryClient.invalidateQueries({ queryKey: [...QKey, 'comments'] });
     },
   });
 
