@@ -48,8 +48,8 @@ const SingleTweet: FC<SingleTweetProps> = ({
               <span className='text-slate-200'>@{userName}</span>
             </Link>
           </div>
-          <div className='col-span-full'>
-            <p className='whitespace-nowrap'>{body}</p>
+          <div className='col-span-full overflow-hidden'>
+            <p className='whitespace-break-spaces break-words'>{body}</p>
           </div>
         </div>
         <div>

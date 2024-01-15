@@ -67,8 +67,8 @@ const Tweet: FC<TweetProps> = ({
               ownerId={ownerId}
             />
           </div>
-          <div className='col-start-2 row-start-2'>
-            <p className='whitespace-nowrap'>{body}</p>
+          <div className='col-start-2 row-start-2 overflow-hidden'>
+            <p className='whitespace-break-spaces break-words'>{body}</p>
             <div
               className='mt-4 flex items-center gap-4'
               onClick={(e) => e.stopPropagation()}
