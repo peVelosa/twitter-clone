@@ -2,12 +2,14 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  schemas  = ["twitter"]
 }
 
 model User {
@@ -32,6 +34,8 @@ model User {
 
   comments      Comment[] @relation(name: "owner_comment")
   commentsLiked Comment[] @relation(name: "user_comments_like")
+
+  @@schema("twitter")
 }
 
 model Tweet {
@@ -48,6 +52,7 @@ model Tweet {
   likes User[] @relation(name: "user_tweets_like")
 
   @@index([id, ownerId])
+  @@schema("twitter")
 }
 
 model Comment {
@@ -63,6 +68,8 @@ model Comment {
   tweetId String
 
   likes User[] @relation(name: "user_comments_like")
+
+  @@schema("twitter")
 }
 
 model Account {
@@ -81,6 +88,7 @@ model Account {
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@schema("twitter")
 }
 
 model Session {
@@ -89,6 +97,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@schema("twitter")
 }
 
 model VerificationToken {
@@ -97,4 +107,5 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+  @@schema("twitter")
 }
